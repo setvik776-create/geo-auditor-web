@@ -70,7 +70,11 @@
               "cacheWrite": 0
             },
             "contextWindow": 262144,
-            "maxTokens": 32768
+            "maxTokens": 32768,
+            "temperature": 0,
+            "options": {
+              "temperature": 0
+            }
           }
         ]
       }
