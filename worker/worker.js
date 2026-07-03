@@ -1,7 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
 require('dotenv').config({ path: '/home/viktor/.env' });
 
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -109,9 +109,19 @@ ${request.input_text}
       const tempFilePath = '/home/viktor/.openclaw/temp_prompt.txt';
       fs.writeFileSync(tempFilePath, promptContent, 'utf-8');
 
-      // 4. Run openclaw agent directly (CLI installed via npm)
+      // 4. Run openclaw agent
       console.log(`[${new Date().toISOString()}] Executing openclaw agent...`);
-      const cmd = `openclaw agent --agent main --message-file ${tempFilePath} --json`;
+      let cmd = `openclaw agent --agent main --message-file ${tempFilePath} --json`;
+      try {
+        const checkDocker = execSync('/usr/bin/docker ps -q -f name=openclaw-gateway', { encoding: 'utf8' }).trim();
+        if (checkDocker) {
+          cmd = `/usr/bin/docker exec openclaw-gateway openclaw agent --agent main --message-file /home/node/.openclaw/temp_prompt.txt --json`;
+          console.log(`[${new Date().toISOString()}] Detected openclaw-gateway container. Routing via docker exec.`);
+        }
+      } catch (e) {
+        console.error("Docker check failed, falling back to host CLI:", e.message);
+        // Docker not running or not installed, fallback to host CLI
+      }
       
       try {
         const output = await runCommand(cmd);
