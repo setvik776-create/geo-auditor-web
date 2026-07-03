@@ -561,12 +561,8 @@ export default function Home() {
               <span style={{ color: 'var(--text-secondary)' }}>kreditai (-ų)</span>
             </div>
             
-            <button className="btn btn-primary" style={{ width: '100%', marginBottom: '12px' }} onClick={handleBuyCredits}>
+            <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleBuyCredits}>
               Papildyti balansą (+10 kreditų / $9)
-            </button>
-            
-            <button className="btn btn-secondary" style={{ width: '100%', cursor: 'default', opacity: 0.8 }} disabled>
-              Telegram paslauga išjungta
             </button>
           </div>
         </div>
