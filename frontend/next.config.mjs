@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {
-    root: '..',
-  },
+  ...(process.env.VERCEL ? {} : {
+    turbopack: {
+      root: '..',
+    },
+  }),
 };
 
 export default nextConfig;
