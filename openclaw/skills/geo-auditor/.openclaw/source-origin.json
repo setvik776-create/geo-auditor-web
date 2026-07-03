@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "source": "git",
+  "spec": "git:https://github.com/setoviktor1-beep/geo-auditor.git",
+  "slug": "geo-auditor",
+  "installedAt": 1782938819478,
+  "git": {
+    "url": "https://github.com/setoviktor1-beep/geo-auditor.git",
+    "commit": "2a094842030298c6c001b5f4aafd3c003ff687e6",
+    "resolvedAt": "2026-07-01T20:46:59.454Z"
+  }
+}

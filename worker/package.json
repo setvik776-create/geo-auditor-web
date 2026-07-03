@@ -1,0 +1,13 @@
+{
+  "name": "geo-auditor-worker",
+  "version": "1.0.0",
+  "description": "GEO Auditor queue worker - polls Supabase for pending audit requests and processes them via OpenClaw",
+  "main": "worker.js",
+  "scripts": {
+    "start": "node worker.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "dotenv": "^16.4.0"
+  }
+}

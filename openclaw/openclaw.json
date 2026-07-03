@@ -1,0 +1,127 @@
+{
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "cffdeb95a4c3ebad69ba4802792ede3bb8130e533722d1c8"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "controlUi": {
+      "allowInsecureAuth": true
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.6.11",
+    "lastTouchedAt": "2026-07-01T20:31:31.642Z"
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "/home/viktor/.openclaw/workspace",
+      "models": {
+        "kimi/kimi-for-coding": {
+          "alias": "Kimi"
+        }
+      },
+      "model": {
+        "primary": "kimi/kimi-for-coding"
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "tools": {
+    "profile": "coding"
+  },
+  "plugins": {
+    "entries": {
+      "kimi": {
+        "enabled": true
+      },
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "kimi": {
+        "baseUrl": "https://api.kimi.com/coding/",
+        "api": "anthropic-messages",
+        "models": [
+          {
+            "id": "kimi-for-coding",
+            "name": "Kimi Code",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 32768
+          }
+        ]
+      }
+    }
+  },
+  "auth": {
+    "profiles": {
+      "kimi:default": {
+        "provider": "kimi",
+        "mode": "api_key"
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "groups": {
+        "*": {
+          "requireMention": true
+        }
+      },
+      "allowFrom": [5235793835],
+      "botToken": "8640789155:AAGCHJJ5EkVENKZvrPSfSu9m-8z4-Nu85OA"
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "compaction-notifier": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-07-01T20:31:31.603Z",
+    "lastRunVersion": "2026.6.11",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  }
+}

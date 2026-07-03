@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GEO Auditor — Monorepo
 
-## Getting Started
+Ši saugykla talpina pilną GEO (Generative Engine Optimization) Audito sistemos kodą ir konfigūracijas.
 
-First, run the development server:
+---
 
+## Saugyklos struktūra
+
+- **`frontend/`**: Next.js App Router (React, Stripe, Supabase client). Vercel priglobiama interneto svetainė.
+- **`worker/`**: Node.js foninis procesas (Queue Worker), kuris stebi Supabase užklausas ir jas apdoroja per OpenClaw.
+- **`openclaw/`**: OpenClaw agento konfigūracija (`openclaw.json`) ir autorinis GEO Audito įgūdis (`skills/geo-auditor/`).
+
+---
+
+## Paleidimas lokaliai ir VPS serveryje
+
+### 1. Duomenų bazė (Supabase)
+Duomenų bazės schema sukurta naudojant 3 pagrindines lenteles:
+- `profiles` — vartotojų balansai ir informacija.
+- `audit_requests` — GEO audito eilių užklausos.
+- `transactions` — Stripe apmokėjimų istorija.
+
+### 2. Interneto Svetainė (`frontend/`)
+Svetainė priglobiama Vercel platformoje.
 ```bash
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Eilės Workeris (`worker/`)
+Worker procesas stebi Supabase duomenų bazę ir naudoja OpenClaw agentą užklausų apdorojimui.
+```bash
+cd worker
+npm install
+node worker.js
+```
+*Gamybinėje aplinkoje rekomenduojama paleisti per PM2:*
+```bash
+pm2 start worker.js --name geo-auditor-worker
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. OpenClaw Konfigūracija (`openclaw/`)
+OpenClaw agentas atlieka semantinės analizės skaičiavimus.
+- Įdiekite OpenClaw CLI globaliai: `npm install -g openclaw`
+- Konfigūracija (`openclaw.json`) turi būti nukopijuota į `~/.openclaw/openclaw.json`.
+- GEO įgūdis (Skill) iš `openclaw/skills/geo-auditor` turi būti patalpintas į `~/.openclaw/workspace/skills/geo-auditor`.
