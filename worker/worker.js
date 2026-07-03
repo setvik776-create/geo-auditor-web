@@ -20,7 +20,7 @@ async function sleep(ms) {
 
 function runCommand(cmd) {
   return new Promise((resolve, reject) => {
-    exec(cmd, { maxBuffer: 20 * 1024 * 1024, timeout: 120000 }, (error, stdout, stderr) => {
+    exec(cmd, { maxBuffer: 20 * 1024 * 1024, timeout: 600000 }, (error, stdout, stderr) => {
       if (error) {
         reject(error);
       } else {
